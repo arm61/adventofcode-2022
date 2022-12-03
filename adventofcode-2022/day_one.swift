@@ -9,8 +9,7 @@ import Foundation
 
 
 func day_one(input: String) -> (Int, Int) {
-    let contents = try! String(contentsOfFile: input)
-    let lines = contents.split(separator:"\n", omittingEmptySubsequences:false)
+    let lines = read_and_split(filename: input, splitBy: "\n")
 
     var elves = [Elf(id: 0)]
     var idx_elf = 0

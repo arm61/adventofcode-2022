@@ -32,3 +32,11 @@ extension Array where Element == Elf {
         return sub_list.reduce(0, { $0 + $1.total_calories() } )
     }
 }
+
+
+public func read_and_split(filename: String, splitBy: Character) -> [Substring] {
+    let contents = try! String(contentsOfFile: filename)
+    return contents.split(separator:splitBy, omittingEmptySubsequences:false)
+}
+
+
