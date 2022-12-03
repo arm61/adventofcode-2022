@@ -33,10 +33,31 @@ extension Array where Element == Elf {
     }
 }
 
+extension Array where Element == Substring {
+    func setElements() -> [Set<Character>] {
+        var out_array = [Set<Character>]()
+        for i in self.indices {
+            out_array.append(Set(self[i]))
+        }
+        return out_array
+    }
+}
+
+extension Array {
+    func chunks(size: Int) -> [[Element]] {
+        return stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
+    }
+}
 
 public func read_and_split(filename: String, splitBy: Character) -> [Substring] {
     let contents = try! String(contentsOfFile: filename)
     return contents.split(separator:splitBy, omittingEmptySubsequences:false)
 }
 
-
+extension Bool {
+    var intValue: Int {
+        return self ? 1 : 0
+    }
+}
