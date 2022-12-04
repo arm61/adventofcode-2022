@@ -30,3 +30,11 @@ print("Day three (2022-12-03)")
 let day_3 = day_three(input: "/Users/andrewmccluskey/work/other/adventofcode-2022/\(mode)_03.txt")
 print("Part one:", day_3.0)
 print("Part two:", day_3.1)
+
+print("--------------------")
+
+print("Day four (2022-12-04)")
+
+let day_4 = day_four(input: "/Users/andrewmccluskey/work/other/adventofcode-2022/\(mode)_04.txt")
+print("Part one:", day_4.0)
+print("Part two:", day_4.1)

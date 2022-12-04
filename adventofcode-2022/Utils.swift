@@ -10,6 +10,7 @@ import Foundation
 public struct Elf {
     public var id: Int
     public var calories = [Int]()
+    public var cleaning_section = Set<Int>()
 
     public func total_calories() -> Int {
         let total = Int(calories.reduce(0, +))
@@ -18,6 +19,10 @@ public struct Elf {
 
     public mutating func append_calories(calorie: Int) {
         calories.append(calorie)
+    }
+    
+    public mutating func set_cleaning_section(start: Int, stop: Int) {
+        cleaning_section = Set(Array(start..<(stop + 1)))
     }
 }
 
@@ -31,6 +36,32 @@ extension Array where Element == Elf {
         let sub_list = Array(sort_list[..<top_n])
         return sub_list.reduce(0, { $0 + $1.total_calories() } )
     }
+    
+    func sort_sections() -> [Set<Int>] {
+        let sections = (0..<count).map({ self[$0].cleaning_section })
+        return sections.sorted { $0.count > $1.count }
+    }
+
+    func compare_sections() -> Bool {
+        let sorted = self.sort_sections()
+        return (0..<sorted.count-1).map({ sorted[$0].isSuperset(of: sorted[$0 + 1]) }).any()
+    }
+    
+    func compare_some_overlap() -> Bool {
+        let sorted = self.sort_sections()
+        return (0..<sorted.count-1).map({!(sorted[$0].isDisjoint(with: sorted[$0 + 1])) }).any()
+    }
+}
+
+extension Array where Element == Bool {
+    func any() -> Bool {
+        for i in self.indices {
+            if self[i] {
+                return true
+            }
+        }
+        return false
+    }
 }
 
 extension Array where Element == Substring {
@@ -38,6 +69,14 @@ extension Array where Element == Substring {
         var out_array = [Set<Character>]()
         for i in self.indices {
             out_array.append(Set(self[i]))
+        }
+        return out_array
+    }
+    
+    func toInt() -> [Int] {
+        var out_array = [Int]()
+        for i in self.indices {
+            out_array.append(Int(self[i])!)
         }
         return out_array
     }
