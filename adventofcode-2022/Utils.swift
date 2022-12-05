@@ -7,6 +7,47 @@
 
 import Foundation
 
+public struct Stack {
+    public var id: Int
+    public var tower = [String]()
+    
+    mutating public func add_to_stack(to_add: String) {
+        tower.append(to_add)
+    }
+    
+    mutating public func add_to_top(to_add: String) {
+        tower.insert(to_add, at: 0)
+    }
+    
+    mutating public func remove_from_stack(n: Int) -> [String] {
+        let removed = tower[..<n]
+        tower = Array(tower[n...])
+        return Array(removed)
+    }
+    
+    mutating public func remove_from_stack_reversed(n: Int) -> [String] {
+        let removed = tower[..<n].reversed()
+        tower = Array(tower[n...])
+        return Array(removed)
+    }
+}
+
+extension Array where Element == Stack {
+    func top_row() -> String {
+        var tr = [String]()
+        for i in self.indices {
+            tr.append(self[i].tower[0])
+        }
+        return tr.joined()
+    }
+}
+
+public struct Move {
+    public var n: Int
+    public var start: Int
+    public var finish: Int
+}
+
 public struct Elf {
     public var id: Int
     public var calories = [Int]()
